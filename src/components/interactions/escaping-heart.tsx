@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { relationshipConfig } from "@/config/relationship";
 
-const positions = [{ x: 0, y: 0 }, { x: 54, y: -18 }, { x: -48, y: 24 }];
+const positions = [
+  { x: 0, y: 0 },
+  { x: 8, y: -4 },
+  { x: -6, y: 5 },
+];
 
 export function EscapingHeart() {
   const [step, setStep] = useState(0);

@@ -36,9 +36,7 @@ export function HeartKeypad({ onUnlock }: HeartKeypadProps) {
       <p className="handwritten text-lg text-rose">{relationshipConfig.openingWhisper}</p>
       <h1 className="mx-auto mt-2 max-w-xs text-balance font-display text-4xl leading-[.95] text-wine">{relationshipConfig.welcomeTitle}</h1>
       <div className="mx-auto my-7 grid size-12 place-items-center rounded-full bg-blush/30"><HeartMark pulse={!reducedMotion} small /></div>
-      <p className="text-[10px] font-bold uppercase tracking-[.28em] text-rose">{relationshipConfig.pinIntro}</p>
       <h2 className="mt-3 font-display text-2xl leading-none text-wine sm:text-3xl">{relationshipConfig.pinTitle}</h2>
-      <p className="mx-auto mt-3 max-w-xs text-xs leading-5 text-ink/50">Tap the numbers to open your private gift.</p>
 
       <motion.div
         className="mt-8 flex min-h-9 flex-wrap items-center justify-center gap-x-3 gap-y-4"

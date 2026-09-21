@@ -109,15 +109,14 @@ export const relationshipConfig = {
       hint: "Only the final two digits.",
     },
   ] satisfies TriviaQuestion[],
-  pinIntro: "a tiny lock for a private gift",
   pinTitle: "The password, please ♡",
   successTitle: "okay, you can come in ♡",
   successCopy: "The little heart unlocked. Your first gift is just ahead.",
   puzzle: {
     imageSrc: "/puzzle-placeholder.png",
     imageAlt: "Placeholder photograph of two coffee cups, letters, ribbon, and pressed flowers",
-    rows: 5,
-    columns: 5,
+    rows: 4,
+    columns: 4,
     snapRadiusRatio: 1.05,
     showPreview: true,
     showHints: true,
@@ -398,4 +397,4 @@ export const relationshipConfig = {
   stages: ["The key", "The picture", "Our story", "Little reasons", "Always"],
 } as const;
 
-export const relationshipPin = relationshipConfig.password;
+export const relationshipPin = "2303";

@@ -1,52 +1,96 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { relationshipConfig } from "@/config/relationship";
+import { createPortal } from "react-dom";
+import { useEffect, useRef, useState } from "react";
 
 export function RomanticCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const cursor = cursorRef.current;
     if (!cursor) return;
+
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
     if (!fine.matches || reduced.matches) return;
 
     let frame = 0;
     let x = -40;
     let y = -40;
+
     const move = (event: PointerEvent) => {
       x = event.clientX;
       y = event.clientY;
+
       if (frame) return;
+
       frame = requestAnimationFrame(() => {
-        cursor.style.transform = `translate3d(${x - 9}px, ${y - 9}px, 0)`;
+        cursor.style.left = `${x}px`;
+        cursor.style.top = `${y}px`;
         cursor.dataset.visible = "true";
         frame = 0;
       });
     };
+
     const over = (event: PointerEvent) => {
-      const target = event.target instanceof Element ? event.target.closest("button, a, input, [data-romantic-interactive]") : null;
+      const target =
+        event.target instanceof Element
+          ? event.target.closest(
+              "button, a, input, [data-romantic-interactive]",
+            )
+          : null;
+
       cursor.dataset.interactive = target ? "true" : "false";
     };
-    const down = () => { cursor.dataset.pressed = "true"; };
-    const up = () => { cursor.dataset.pressed = "false"; };
-    const hide = () => { cursor.dataset.visible = "false"; };
+
+    const down = () => {
+      cursor.dataset.pressed = "true";
+    };
+
+    const up = () => {
+      cursor.dataset.pressed = "false";
+    };
+
+    const hide = () => {
+      cursor.dataset.visible = "false";
+    };
+
     window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("pointerover", over, { passive: true });
     window.addEventListener("pointerdown", down, { passive: true });
     window.addEventListener("pointerup", up, { passive: true });
     document.addEventListener("mouseleave", hide);
+
     return () => {
       if (frame) cancelAnimationFrame(frame);
+
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerover", over);
       window.removeEventListener("pointerdown", down);
       window.removeEventListener("pointerup", up);
       document.removeEventListener("mouseleave", hide);
     };
-  }, []);
+  }, [mounted]);
 
-  return <div ref={cursorRef} className="romantic-cursor" aria-label={relationshipConfig.playfulness.cursorLabel} aria-hidden="true"><span>♥</span></div>;
+  if (!mounted) return null;
+
+  return createPortal(
+    <div
+      ref={cursorRef}
+      className="romantic-cursor"
+      aria-hidden="true"
+    >
+      <span className="romantic-cursor-heart">♡</span>
+      <span className="romantic-cursor-sparkle">✦</span>
+    </div>,
+    document.body,
+  );
 }
