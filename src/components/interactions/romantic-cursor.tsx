@@ -36,9 +36,8 @@ export function RomanticCursor() {
         const node = cursorRef.current;
 
         if (node) {
-          node.style.transform =
-            `translate3d(${x}px, ${y}px, 0) translate3d(-50%, -50%, 0)`;
-
+          node.style.left = `${x}px`;
+          node.style.top = `${y}px`;
           node.dataset.visible = "true";
         }
 
@@ -47,21 +46,20 @@ export function RomanticCursor() {
     };
 
     const down = () => {
-      cursor.dataset.pressed = "true";
+      if (cursorRef.current) {
+        cursorRef.current.dataset.pressed = "true";
+      }
     };
 
     const up = () => {
-      cursor.dataset.pressed = "false";
-    };
-
-    const hide = () => {
-      cursor.dataset.visible = "false";
+      if (cursorRef.current) {
+        cursorRef.current.dataset.pressed = "false";
+      }
     };
 
     window.addEventListener("pointermove", move, { passive: true });
     window.addEventListener("pointerdown", down, { passive: true });
     window.addEventListener("pointerup", up, { passive: true });
-    document.addEventListener("mouseleave", hide);
 
     return () => {
       if (frame) cancelAnimationFrame(frame);
@@ -69,7 +67,6 @@ export function RomanticCursor() {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerdown", down);
       window.removeEventListener("pointerup", up);
-      document.removeEventListener("mouseleave", hide);
     };
   }, [mounted]);
 

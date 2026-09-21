@@ -1,87 +1,293 @@
 "use client";
 
 import Image from "next/image";
-import React, { type PointerEvent, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 import type { TimelineMemory } from "@/config/relationship";
-import { relationshipConfig } from "@/config/relationship";
-import { motionSprings } from "@/lib/motion";
 
-type Photo = NonNullable<TimelineMemory["images"]>[number];
+type InteractionProps = {
+  memory: TimelineMemory;
+  reducedMotion: boolean;
+  onComplete?: () => void;
+};
 
-export function DraggableMemoryPhoto({ photo, reducedMotion, interactionCopy = "drag me" }: { photo: Photo; reducedMotion: boolean; interactionCopy?: string }) {
-  const bounds = useRef<HTMLDivElement>(null);
-  const [moved, setMoved] = useState(false);
-  return (
-    <div ref={bounds} className="relative mx-auto min-h-[18rem] max-w-4xl overflow-hidden rounded-[1.5rem] sm:min-h-[28rem]">
-      <div className="absolute inset-8 grid place-items-center rounded-xl border border-dashed border-rose/30 bg-blush/20 p-8 text-center">
-        <p className="max-w-sm font-display text-xl italic text-wine/75">{relationshipConfig.timeline.hiddenPhotoNote}</p>
-      </div>
-      <motion.figure
-        drag={!reducedMotion}
-        dragConstraints={bounds}
-        dragElastic={.12}
-        dragMomentum={false}
-        animate={{ x: moved ? (reducedMotion ? 0 : 88) : 0, rotate: moved && !reducedMotion ? 2 : 0 }}
-        onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setMoved((value) => !value); } }}
-        whileDrag={{ scale: 1.015, rotate: -1.2 }}
-        transition={motionSprings.photograph}
-        tabIndex={0}
-        data-romantic-interactive
-        aria-label={`${photo.alt}. ${interactionCopy}`}
-        aria-expanded={moved}
-        role="button"
-        className="light-catch absolute inset-0 touch-pan-y cursor-grab overflow-hidden rounded-[1.5rem] border-[7px] border-white bg-blush/25 shadow-[0_24px_70px_rgba(91,51,57,.18)] active:cursor-grabbing"
-      >
-        <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 768px) 92vw, 800px" className="object-cover" draggable={false} />
-      </motion.figure>
-      <p className="pointer-events-none absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-paper/90 px-3 py-1 text-[9px] font-bold text-wine shadow-sm">{interactionCopy}</p>
-    </div>
-  );
-}
+export function DraggableMemoryPhoto({
+  memory,
+  reducedMotion,
+  onComplete,
+}: InteractionProps) {
+  const [dragged, setDragged] = useState(false);
 
-export function FlippableMemoryPhoto({ photo, backCopy, reducedMotion, className = "" }: { photo: Photo; backCopy: string; reducedMotion: boolean; className?: string }) {
-  const [flipped, setFlipped] = useState(false);
-  return (
-    <button type="button" data-romantic-interactive onClick={() => setFlipped((value) => !value)} aria-pressed={flipped} aria-label={flipped ? relationshipConfig.timeline.photoFrontLabel : relationshipConfig.timeline.photoBackLabel} className={`relative aspect-[4/5] w-full [perspective:900px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine ${className}`}>
-      <motion.span animate={{ rotateY: reducedMotion ? 0 : flipped ? 180 : 0 }} transition={motionSprings.photograph} className="absolute inset-0 block [transform-style:preserve-3d]">
-        <span className={`absolute inset-0 block overflow-hidden border-[7px] border-white bg-blush/25 shadow-[0_20px_45px_rgba(91,51,57,.2)] [backface-visibility:hidden] ${flipped && reducedMotion ? "opacity-0" : "opacity-100"}`}><Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 768px) 62vw, 360px" className="object-cover" draggable={false} /></span>
-        <span className={`absolute inset-0 grid place-items-center border-[7px] border-white bg-[#fffaf0] p-6 font-display text-lg italic leading-7 text-wine shadow-[0_20px_45px_rgba(91,51,57,.2)] [backface-visibility:hidden] [transform:rotateY(180deg)] ${flipped && reducedMotion ? "opacity-100 [transform:none]" : reducedMotion ? "opacity-0" : ""}`}>{backCopy}</span>
-      </motion.span>
-    </button>
-  );
-}
+  const image = memory.images?.[0];
 
-type Print = { id: number; x: number; y: number; rotate: number };
-
-export function MemoryPhotoTrail({ photo, reducedMotion }: { photo: Photo; reducedMotion: boolean }) {
-  const [prints, setPrints] = useState<Print[]>([]);
-  const last = useRef({ x: 0, y: 0 });
-  const id = useRef(0);
-  function leavePrint(event: PointerEvent<HTMLDivElement>) {
-    if (reducedMotion || (event.pointerType === "touch" && prints.length >= 3)) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
-    if (Math.hypot(x - last.current.x, y - last.current.y) < 52) return;
-    last.current = { x, y };
-    setPrints((items) => [...items.slice(-5), { id: id.current++, x, y, rotate: (id.current % 5 - 2) * 3 }]);
+  if (!image) {
+    return null;
   }
+
+  function completeDrag() {
+    if (dragged) return;
+
+    setDragged(true);
+    onComplete?.();
+  }
+
   return (
-    <div data-romantic-interactive onPointerMove={leavePrint} className="light-catch relative aspect-[4/3] touch-pan-y overflow-hidden rounded-[1.5rem] border-[7px] border-white bg-blush/25 shadow-[0_24px_60px_rgba(91,51,57,.17)] md:aspect-[4/5]">
-      <Image src={photo.src} alt={photo.alt} fill sizes="(max-width: 768px) 92vw, 480px" className="object-cover" draggable={false} />
-      {prints.map((print) => <motion.span key={print.id} initial={{ opacity: 0, scale: .92 }} animate={{ opacity: .85, scale: 1 }} style={{ left: print.x - 24, top: print.y - 30, rotate: print.rotate }} className="pointer-events-none absolute h-14 w-12 overflow-hidden border-[3px] border-white bg-paper shadow-md"><Image src={photo.src} alt="" fill sizes="48px" className="object-cover" /></motion.span>)}
-      <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-paper/90 px-3 py-1 text-[9px] font-bold text-wine shadow-sm">{relationshipConfig.timeline.trailHint}</span>
+    <div className="relative flex flex-col items-center">
+      <motion.div
+        drag
+        dragSnapToOrigin
+        dragElastic={0.75}
+        whileDrag={{
+          scale: 1.04,
+          rotate: 2,
+          zIndex: 30,
+          cursor: "grabbing",
+        }}
+        whileHover={{
+          rotate: -1,
+          scale: 1.015,
+        }}
+        onDragEnd={completeDrag}
+        animate={
+          !dragged && !reducedMotion
+            ? {
+                x: [0, 4, -4, 0],
+                rotate: [0, 1, -1, 0],
+              }
+            : undefined
+        }
+        transition={{
+          duration: 2.8,
+          repeat: dragged || reducedMotion ? 0 : Infinity,
+          ease: "easeInOut",
+        }}
+        className="relative z-10 w-[min(72vw,310px)] cursor-grab touch-none select-none rounded-sm bg-[#fffdf8] p-3 pb-10 shadow-[0_18px_35px_rgba(91,51,57,.16)]"
+        role="button"
+        tabIndex={0}
+        aria-label={memory.interactionCopy ?? "Drag the photograph"}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            completeDrag();
+          }
+        }}
+      >
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#f2e7dc]">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(max-width: 640px) 72vw, 310px"
+            className="pointer-events-none select-none object-cover"
+            draggable={false}
+          />
+
+          {!dragged && (
+            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
+              <span className="rounded-full bg-white/85 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] text-wine shadow-sm">
+                drag me ♡
+              </span>
+            </div>
+          )}
+        </div>
+
+        <p className="handwritten pointer-events-none absolute bottom-2 left-0 right-0 text-center text-base text-ink/60">
+          {dragged ? "you found it ♡" : "move me a little"}
+        </p>
+      </motion.div>
+
+      {!dragged && (
+        <motion.div
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="pointer-events-none mt-5 flex items-center gap-2 text-xs font-medium text-wine/60"
+        >
+          <span className="text-base">↔</span>
+          <span>{memory.interactionCopy ?? "drag me"}</span>
+        </motion.div>
+      )}
+
+      {dragged && (
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-5 text-sm font-semibold text-wine"
+        >
+          found it ♡
+        </motion.p>
+      )}
     </div>
   );
 }
 
-export function MemoryKeepsake({ reducedMotion }: { reducedMotion: boolean }) {
-  const [found, setFound] = useState(false);
+export function FlippableMemoryPhoto({
+  memory,
+  reducedMotion,
+  onComplete,
+}: InteractionProps) {
+  const [flipped, setFlipped] = useState(false);
+
+  const image = memory.images?.[0];
+
+  if (!image) {
+    return null;
+  }
+
+  function toggleFlip() {
+    setFlipped((value) => {
+      const next = !value;
+
+      if (next) {
+        onComplete?.();
+      }
+
+      return next;
+    });
+  }
+
   return (
-    <div className="mt-7 flex items-center gap-4">
-      <motion.button type="button" data-romantic-interactive drag={!reducedMotion} dragSnapToOrigin dragElastic={.2} onClick={() => setFound(true)} onDragEnd={() => setFound(true)} whileDrag={{ scale: 1.08, rotate: 8 }} aria-label={relationshipConfig.timeline.memories[3].interactionCopy} className="grid size-14 shrink-0 touch-pan-y place-items-center rounded-full border border-rose/20 bg-blush/30 font-display text-2xl text-rose shadow-sm focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-wine">✿</motion.button>
-      <p aria-live="polite" className="font-display text-lg italic text-wine/65">{found ? relationshipConfig.timeline.keepsakeFound : relationshipConfig.timeline.memories[3].interactionCopy}</p>
+    <div className="relative flex flex-col items-center">
+      <button
+        type="button"
+        onClick={toggleFlip}
+        className="relative h-[390px] w-[min(72vw,310px)] [perspective:1000px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine"
+        aria-label={
+          flipped
+            ? memory.photoBackCopy ?? "Turn photograph back"
+            : memory.interactionCopy ?? "Flip photograph"
+        }
+      >
+        <motion.div
+          animate={{ rotateY: flipped ? 180 : 0 }}
+          transition={{
+            duration: reducedMotion ? 0 : 0.55,
+            ease: "easeInOut",
+          }}
+          className="relative h-full w-full [transform-style:preserve-3d]"
+        >
+          <div className="absolute inset-0 overflow-hidden rounded-sm bg-[#fffdf8] p-3 pb-10 shadow-[0_18px_35px_rgba(91,51,57,.16)] [backface-visibility:hidden]">
+            <div className="relative h-full w-full overflow-hidden bg-[#f2e7dc]">
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                sizes="(max-width: 640px) 72vw, 310px"
+                className="object-cover"
+              />
+            </div>
+
+            <span className="handwritten absolute bottom-2 left-0 right-0 text-center text-base text-ink/60">
+              {memory.interactionCopy ?? "flip me ↻"}
+            </span>
+          </div>
+
+          <div className="absolute inset-0 flex rotate-y-180 items-center justify-center rounded-sm bg-[#fff7f1] p-8 text-center shadow-[0_18px_35px_rgba(91,51,57,.16)] [backface-visibility:hidden]">
+            <div>
+              <span className="mb-4 block text-2xl">♡</span>
+              <p className="handwritten text-lg leading-7 text-ink/70">
+                {memory.photoBackCopy ??
+                  "A tiny note waiting behind this photograph."}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </button>
+
+      {!flipped && (
+        <p className="mt-5 text-xs font-medium text-wine/60">
+          tap the photograph ♡
+        </p>
+      )}
+    </div>
+  );
+}
+
+export function MemoryPhotoTrail({
+  memory,
+  onComplete,
+}: InteractionProps) {
+  const [marked, setMarked] = useState(false);
+
+  const image = memory.images?.[0];
+
+  if (!image) {
+    return null;
+  }
+
+  function complete() {
+    setMarked(true);
+    onComplete?.();
+  }
+
+  return (
+    <div className="flex flex-col items-center">
+      <button
+        type="button"
+        onClick={complete}
+        className={`relative w-[min(72vw,310px)] overflow-hidden rounded-sm bg-[#fffdf8] p-3 pb-10 shadow-[0_18px_35px_rgba(91,51,57,.16)] transition-transform ${
+          marked ? "rotate-1" : "hover:-rotate-1"
+        }`}
+      >
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#f2e7dc]">
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            sizes="(max-width: 640px) 72vw, 310px"
+            className="object-cover"
+          />
+        </div>
+
+        <p className="handwritten absolute bottom-2 left-0 right-0 text-center text-base text-ink/60">
+          {marked ? "a little trail ♡" : memory.interactionCopy ?? "tap me"}
+        </p>
+      </button>
+
+      {!marked && (
+        <p className="mt-5 text-xs text-wine/60">
+          leave a little mark here ♡
+        </p>
+      )}
+    </div>
+  );
+}
+
+export function MemoryKeepsake({
+  memory,
+  onComplete,
+}: InteractionProps) {
+  const [found, setFound] = useState(false);
+
+  function findKeepsake() {
+    if (found) return;
+
+    setFound(true);
+    onComplete?.();
+  }
+
+  return (
+    <div className="flex flex-col items-center">
+      <button
+        type="button"
+        onClick={findKeepsake}
+        className={`group relative rounded-2xl border border-wine/10 bg-[#fffaf4] px-8 py-7 shadow-[0_18px_35px_rgba(91,51,57,.12)] transition ${
+          found ? "rotate-1" : "hover:-translate-y-1"
+        }`}
+      >
+        <span className="block text-4xl transition-transform group-hover:scale-110">
+          {found ? "♡" : "🎁"}
+        </span>
+
+        <span className="mt-3 block text-sm font-semibold text-wine">
+          {found ? "kept safe ♡" : memory.interactionCopy ?? "find the keepsake"}
+        </span>
+      </button>
+
+      {found && (
+        <p className="mt-4 text-center text-sm text-ink/60">
+          {memory.note ?? "A tiny piece of this memory is yours to keep."}
+        </p>
+      )}
     </div>
   );
 }
