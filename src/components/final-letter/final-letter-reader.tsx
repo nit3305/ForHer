@@ -17,9 +17,8 @@ export function FinalLetterReader({ onRestart }: { onRestart: () => void }) {
   const reducedMotion = useReducedMotion() ?? false;
   const { scrollYProgress } = useScroll({ target: readerRef, offset: ["start start", "end end"] });
   const complete = revealedCount === config.sections.length;
-  const continuation = config.sections[revealedCount - 1]?.continuation;
-  const continuationLabel = continuation === "seal" ? config.interactions.sealLabel : continuation === "tab" ? config.interactions.tabLabel : continuation === "fold" ? config.interactions.foldLabel : config.continueLabel;
-
+  const continuationLabel = config.continueLabel;
+  
   useEffect(() => {
     if (!complete) return;
     const timer = window.setTimeout(() => setEndingVisible(true), reducedMotion ? 100 : 1500);
@@ -54,20 +53,20 @@ export function FinalLetterReader({ onRestart }: { onRestart: () => void }) {
         </div>
       )}
       {unfolded && (
-      <article aria-label="A letter for you" className="relative overflow-hidden rounded-sm border border-wine/10 bg-paper shadow-[0_26px_75px_rgba(91,51,57,.16)]">
-        <PaperTape className="left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rotate-1" />
-        {config.sections.slice(0, revealedCount).map((section) => <FinalLetterSection key={section.id} section={section} reducedMotion={reducedMotion} />)}
+        <article aria-label="A letter for you" className="relative overflow-hidden rounded-sm border border-wine/10 bg-paper shadow-[0_26px_75px_rgba(91,51,57,.16)]">
+          <PaperTape className="left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rotate-1" />
+          {config.sections.slice(0, revealedCount).map((section) => <FinalLetterSection key={section.id} section={section} reducedMotion={reducedMotion} />)}
 
-        {!complete && (
-          <motion.div initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? .1 : motionDurations.reveal, ease: motionEasings.enter }} className="border-t border-rose/10 px-6 py-9 text-center">
-            <button type="button" data-romantic-interactive onClick={continueReading} className={`min-h-11 px-5 font-display text-xl italic text-rose hover:text-wine focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose continuation-${continuation ?? "plain"}`}>{continuationLabel} <span aria-hidden="true">↓</span></button>
-          </motion.div>
-        )}
+          {!complete && (
+            <motion.div initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? .1 : motionDurations.reveal, ease: motionEasings.enter }} className="border-t border-rose/10 px-6 py-9 text-center">
+              <button type="button" data-romantic-interactive onClick={continueReading} className={`min-h-11 px-5 font-display text-xl italic text-rose hover:text-wine focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose continuation-${continuation ?? "plain"}`}>{continuationLabel} <span aria-hidden="true">↓</span></button>
+            </motion.div>
+          )}
 
-        <AnimatePresence>
-          {endingVisible && <FinalLetterEnding reducedMotion={reducedMotion} onReplay={replay} onRestart={onRestart} />}
-        </AnimatePresence>
-      </article>
+          <AnimatePresence>
+            {endingVisible && <FinalLetterEnding reducedMotion={reducedMotion} onReplay={replay} onRestart={onRestart} />}
+          </AnimatePresence>
+        </article>
       )}
     </div>
   );
