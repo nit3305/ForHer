@@ -76,13 +76,13 @@ function overlapRatio(
   const width = Math.max(
     0,
     Math.min(pieceRect.right, target.right) -
-      Math.max(pieceRect.left, target.left),
+    Math.max(pieceRect.left, target.left),
   );
 
   const height = Math.max(
     0,
     Math.min(pieceRect.bottom, target.bottom) -
-      Math.max(pieceRect.top, target.top),
+    Math.max(pieceRect.top, target.top),
   );
 
   const overlap = width * height;
@@ -388,10 +388,10 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
             reducedMotion
               ? false
               : {
-                  opacity: 0,
-                  y: -5,
-                  scale: 0.9,
-                }
+                opacity: 0,
+                y: -5,
+                scale: 0.9,
+              }
           }
           animate={{
             opacity: 1,
@@ -495,11 +495,11 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
                       reducedMotion
                         ? false
                         : {
-                            scale: 1.06,
-                            rotate:
-                              piece.restingRotation *
-                              0.35,
-                          }
+                          scale: 1.06,
+                          rotate:
+                            piece.restingRotation *
+                            0.35,
+                        }
                     }
                     animate={{
                       scale: 1,
@@ -691,9 +691,9 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
                     ) => {
                       if (
                         event.key ===
-                          "Enter" ||
+                        "Enter" ||
                         event.key ===
-                          " "
+                        " "
                       ) {
                         event.preventDefault();
                         placePiece(
@@ -712,38 +712,27 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
                     dragMomentum={false}
                     dragSnapToOrigin
                     onDragStart={() => {
-                      const rect =
-                        pieceNodes.current
-                          .get(
-                            piece.id,
-                          )
-                          ?.getBoundingClientRect();
+                      const node = pieceNodes.current.get(piece.id);
 
-                      if (!rect) return;
+                      if (!node) return;
 
-                      dragOrigin.current =
-                        {
-                          pieceId:
-                            piece.id,
-                          left:
-                            rect.left,
-                          top:
-                            rect.top,
-                          width:
-                            rect.width,
-                          height:
-                            rect.height,
-                        };
+                      const rect = node.getBoundingClientRect();
 
-                      setDraggingId(
-                        piece.id,
-                      );
-                      setSelectedId(
-                        piece.id,
-                      );
-                      setPlacementMessage(
-                        "take it to the board ♡",
-                      );
+                      dragOrigin.current = {
+                        pieceId: piece.id,
+                        left: rect.left,
+                        top: rect.top,
+                        width: rect.width,
+                        height: rect.height,
+                      };
+
+                      setDraggingId(piece.id);
+
+                      // Keep selection for accessibility/instructions,
+                      // but don't let selection visually reposition the piece.
+                      setSelectedId(piece.id);
+
+                      setPlacementMessage("take it to the board ♡");
                     }}
                     onDrag={(
                       _event,
@@ -764,61 +753,35 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
                       )
                     }
                     animate={{
-                      rotate:
-                        draggingId ===
-                          piece.id ||
-                        reducedMotion
-                          ? 0
-                          : piece.restingRotation,
-
-                      y:
-                        selectedId ===
-                        piece.id
-                          ? -4
-                          : 0,
-
-                      scale:
-                        selectedId ===
-                        piece.id
-                          ? 1.035
-                          : 1,
+                      // IMPORTANT:
+                      // Never change the piece's transform when dragging begins.
+                      // Changing rotation/scale here makes the grabbed point move.
+                      rotate: piece.restingRotation,
+                      y: 0,
+                      scale: 1,
 
                       opacity:
-                        selectedId !==
-                          null &&
-                        selectedId !==
-                          piece.id
+                        selectedId !== null &&
+                          selectedId !== piece.id
                           ? 0.5
                           : 1,
                     }}
-                    whileDrag={
-                      reducedMotion
-                        ? {
-                            zIndex: 50,
-                          }
-                        : {
-                            scale: 1.1,
-                            rotate: 0,
-                            y: -8,
-                            zIndex: 50,
-                          }
-                    }
+                    whileDrag={{
+                      zIndex: 50,
+                    }}
                     transition={
                       reducedMotion
                         ? { duration: 0 }
                         : motionSprings.tactile
                     }
-                    className={`jigsaw-drag-piece relative z-10 aspect-square min-h-14 min-w-14 w-full touch-none overflow-visible rounded-lg cursor-grab active:cursor-grabbing focus-visible:z-30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine ${
-                      draggingId ===
-                      piece.id
-                        ? "drop-shadow-[0_12px_14px_rgba(91,51,57,.30)]"
-                        : ""
-                    } ${
-                      selectedId ===
-                      piece.id
+                    className={`jigsaw-drag-piece relative z-10 aspect-square min-h-14 min-w-14 w-full touch-none select-none overflow-visible rounded-lg cursor-grab active:cursor-grabbing focus-visible:z-30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine ${piece.id
+                      ? "drop-shadow-[0_12px_14px_rgba(91,51,57,.30)]"
+                      : ""
+                      } ${selectedId ===
+                        piece.id
                         ? "drop-shadow-[0_6px_10px_rgba(91,51,57,.16)]"
                         : ""
-                    }`}
+                      }`}
                   >
                     <JigsawPieceGraphic
                       piece={piece}
@@ -867,9 +830,9 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
             onKeyDown={(event) => {
               if (
                 event.key ===
-                  " " ||
+                " " ||
                 event.key ===
-                  "Enter"
+                "Enter"
               ) {
                 beginPreview();
               }
@@ -877,9 +840,9 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
             onKeyUp={(event) => {
               if (
                 event.key ===
-                  " " ||
+                " " ||
                 event.key ===
-                  "Enter"
+                "Enter"
               ) {
                 endPreview();
               }

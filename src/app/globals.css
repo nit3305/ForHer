@@ -747,8 +747,8 @@ button:focus-visible {
 }
 
 /* =========================================================
-   ARROW / CURSOR
-   ========================================================= */
+  ARROW / CURSOR
+  ========================================================= */
 
 .cinematic-arrow {
   display: inline-block;
@@ -760,86 +760,99 @@ button:hover .cinematic-arrow {
   transform: translateX(3px);
 }
 
+/* Custom romantic cursor */
 .romantic-cursor {
+  pointer-events: none;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  z-index: 99999 !important;
+
+  width: 24px;
+  height: 24px;
+
+  margin: 0;
+  padding: 0;
+
   display: none;
+
+  opacity: 0;
+
+  transform-origin: center center;
+
+  /* Important:
+     the React component controls the position.
+     Do not transition or animate transform here. */
+  transition: opacity 120ms ease;
+
+  will-change: transform;
 }
 
+.romantic-cursor[data-visible="true"] {
+  opacity: 1;
+}
+
+.romantic-cursor-heart {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+
+  transform: translate(-50%, -52%);
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  line-height: 1;
+
+  color: #c98291;
+
+  filter:
+    drop-shadow(0 2px 4px rgba(127, 57, 72, 0.12));
+}
+
+.romantic-cursor-sparkle {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 7px;
+  line-height: 1;
+
+  color: #dca8b3;
+
+  transform: rotate(12deg);
+}
+
+/*
+  Desktop only.
+
+  No cursor scaling.
+  No cursor movement transitions.
+  No hover transforms.
+  No pressed transforms.
+
+  This keeps the cursor locked exactly to
+  the browser pointer, including over the puzzle.
+*/
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .romantic-cursor {
-    display: none;
+    display: block;
   }
+}
 
-  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-    .romantic-cursor {
-      display: none;
-    }
+@media (max-width: 639px) {
+  .romantic-cursor {
+    display: none !important;
+  }
+}
 
-    @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-      .romantic-cursor {
-        pointer-events: none;
-        position: fixed;
-        left: 0;
-        top: 0;
-        z-index: 9999;
+/* Hide the native cursor on devices that use the custom cursor. */
+@media (hover: hover) and (pointer: fine) {
 
-        display: block;
-        width: 24px;
-        height: 24px;
-
-        transform: translate(-50%, -50%);
-
-        opacity: 0;
-
-        transition:
-          opacity 120ms ease,
-          scale 180ms cubic-bezier(.2, .8, .2, 1);
-      }
-
-      .romantic-cursor[data-visible="true"] {
-        opacity: 1;
-      }
-
-      .romantic-cursor-heart {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-
-        transform: translate(-50%, -52%);
-
-        font-family: Georgia, serif;
-        font-size: 20px;
-        line-height: 1;
-
-        color: #c98291;
-
-        filter: drop-shadow(0 2px 4px rgba(127, 57, 72, 0.12));
-      }
-
-      .romantic-cursor-sparkle {
-        position: absolute;
-        right: 0;
-        top: 0;
-
-        font-size: 7px;
-        line-height: 1;
-
-        color: #dca8b3;
-
-        transform: rotate(12deg);
-      }
-
-      .romantic-cursor[data-interactive="true"] {
-        scale: 1.35;
-      }
-
-      .romantic-cursor[data-interactive="true"] .romantic-cursor-heart {
-        color: #b86f80;
-      }
-
-      .romantic-cursor[data-pressed="true"] {
-        scale: 0.82;
-      }
-    }
+  html,
+  body,
+  * {
+    cursor: none !important;
   }
 }
 
