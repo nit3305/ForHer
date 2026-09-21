@@ -126,7 +126,7 @@ export function FinalLetterStage({
               </p>
             </div>
 
-            <FinaleGift />
+            <FinaleGift onRestart={onRestart} />
 
             <div className="flex justify-center pb-6">
               <button

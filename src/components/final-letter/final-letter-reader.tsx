@@ -18,7 +18,7 @@ export function FinalLetterReader({ onRestart }: { onRestart: () => void }) {
   const { scrollYProgress } = useScroll({ target: readerRef, offset: ["start start", "end end"] });
   const complete = revealedCount === config.sections.length;
   const continuationLabel = config.continueLabel;
-  
+
   useEffect(() => {
     if (!complete) return;
     const timer = window.setTimeout(() => setEndingVisible(true), reducedMotion ? 100 : 1500);
@@ -59,7 +59,7 @@ export function FinalLetterReader({ onRestart }: { onRestart: () => void }) {
 
           {!complete && (
             <motion.div initial={{ opacity: 0, y: reducedMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reducedMotion ? .1 : motionDurations.reveal, ease: motionEasings.enter }} className="border-t border-rose/10 px-6 py-9 text-center">
-              <button type="button" data-romantic-interactive onClick={continueReading} className={`min-h-11 px-5 font-display text-xl italic text-rose hover:text-wine focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose continuation-${continuation ?? "plain"}`}>{continuationLabel} <span aria-hidden="true">↓</span></button>
+              <button type="button" data-romantic-interactive onClick={continueReading} className={`min-h-11 px-5 font-display text-xl italic text-rose hover:text-wine focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose className="min-h-11 px-5 font-display text-xl italic text-rose hover:text-wine focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-rose"`}>{continuationLabel} <span aria-hidden="true">↓</span></button>
             </motion.div>
           )}
 
