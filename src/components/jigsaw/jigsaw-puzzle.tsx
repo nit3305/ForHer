@@ -862,6 +862,18 @@ export function JigsawPuzzle({ onContinue }: JigsawPuzzleProps) {
         drag a piece toward the picture · or tap a piece and its home
       </p>
 
+      {!completed && (
+        <div className="mt-5 flex justify-center">
+          <button
+            type="button"
+            onClick={onContinue}
+            className="text-[10px] font-bold uppercase tracking-[0.16em] text-ink/30 underline decoration-ink/10 underline-offset-4 transition hover:text-wine hover:decoration-wine/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-wine"
+          >
+            skip puzzle →
+          </button>
+        </div>
+      )}
+
       {/* Completion */}
       <AnimatePresence>
         {showSuccess && (
