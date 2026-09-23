@@ -32,7 +32,13 @@ export type LoveReason = {
   tinyCaption?: string;
   image?: { src: string; alt: string };
   accent: "playful" | "soft" | "deep";
-  layout: "minimal" | "envelope" | "photo-note" | "letter" | "playful" | "deep";
+  layout:
+    | "minimal"
+    | "envelope"
+    | "photo-note"
+    | "letter"
+    | "playful"
+    | "deep";
   reveal: "envelope" | "pull" | "scratch" | "peel" | "hold" | "flip";
 };
 
@@ -69,6 +75,7 @@ export const relationshipConfig = {
   password: "140224",
 
   eyebrow: "A little something, just for you",
+  openingWhisper: "just a little something from me to you ♡",
   welcomeTitle: "I made something for you ♡",
   welcomeCopy: "A tiny private gift is waiting behind this little heart lock.",
 
@@ -151,12 +158,13 @@ export const relationshipConfig = {
     introSecondLine: "So let’s put ours in order.",
     introButtonLabel: "Walk through our story →",
 
+    contentNote: "A few little pieces of us, saved here for you. ♡",
+
     previousLabel: "← last memory",
     nextLabel: "next memory ♡",
 
     heading: "The moments that made us.",
     introduction: "Four little chapters, waiting to be opened in order.",
-
 
     memories: [
       {
@@ -247,23 +255,22 @@ export const relationshipConfig = {
     hiddenPhotoNote:
       "Placeholder: a small secret that only appears when the photograph moves.",
 
-    keepsakeFound:
-      "A tiny piece of this chapter, kept safe.",
+    keepsakeFound: "A tiny piece of this chapter, kept safe.",
 
-    trailHint:
-      "Leave a little trail across this memory.",
+    trailHint: "Leave a little trail across this memory.",
 
-    photoFrontLabel:
-      "Turn photograph to the front",
+    photoFrontLabel: "Turn photograph to the front",
 
-    photoBackLabel:
-      "Turn photograph over",
+    photoBackLabel: "Turn photograph over",
   },
 
   loveNotes: {
     introFirstLine: "Memories are one part of why I love us.",
     introSecondLine: "But you’re the reason I love all of it.",
     introButtonLabel: "Open the first note →",
+
+    contentNote:
+      "Six little reasons, because I could never fit them all into one note. ♡",
 
     reasons: [
       {
@@ -356,6 +363,10 @@ export const relationshipConfig = {
       holdReleased: "Almost—the heart is still here.",
       holdFallback: "Reveal this reason",
       flipHint: "Turn the note over",
+
+      pileSecretLabel: "a little secret ♡",
+      pileSecret:
+        "There are still a thousand more reasons I could give you.",
     },
   },
 
@@ -366,51 +377,45 @@ export const relationshipConfig = {
       beginLabel: "Read my letter",
     },
 
+    contentNote: "A letter for you, with everything I couldn't fit anywhere else. ♡",
+
     sections: [
       {
-
+        id: "beginning",
         body:
           "I still think I was really lucky to have you sit beside me during classes. Honestly, with how difficult it was for us to even end up sitting beside each other, sometimes I feel like it had to be fate. Maybe we were always going to find our way to each other somehow.\n\nI wanted to talk to you so badly, but you were so damn pretty that I couldn't even bring myself to approach you. You were my crush, so obviously my brain decided that talking to you was suddenly the hardest thing in the world. I just wanted to be around you all the time.\n\nI still remember Krishi and Foram making that joke about us because I was wearing yellow and you were wearing pink — “bundi ka laddu.” 😂 I don't think I could've guessed back then how funny it would be to look back at those little moments and realize they were part of the beginning of us.\n\nAnd somehow, from something as simple as sitting beside each other in class, we ended up here. I really do think we were meant to meet somehow. ♡",
-
         layout: "text",
         continuation: "seal",
       },
 
       {
-
-
+        id: "what-you-mean",
         body:
           "Having you in my life is probably the most important thing to me. You're so precious to me, and you're so close to my heart that sometimes I don't even know how to properly put it into words.\n\nYou're the person I feel like I can tell everything to. I can talk to you about the smallest, most random things, or the things that actually matter, and somehow it always feels right. Your kindness and the way you care about me make it so easy for me to be comfortable around you and just be myself.\n\nI think you make me feel complete in a way I didn't really know I was looking for. It's hard to explain exactly why it's you. I just know that when I think about the person I want beside me, the person I want to tell things to, laugh with, annoy, and make memories with, it's always you.\n\nI might never find the perfect words for why you specifically mean so much to me. Maybe I don't need to. I just know that having you in my life is something I'll always be incredibly grateful for. ♡",
-
         layout: "text",
         continuation: "tab",
       },
 
       {
-
-
+        id: "everyday-love",
         body:
           "I think some of my favorite parts of loving you are the little moments that probably don't seem like much to anyone else.\n\nEven when you get all angry at me, I can't lie, sometimes it's kinda cute. Sometimes. Don't get too confident though. 😂\n\nYour smile is something I genuinely don't think I'll ever get tired of. I swear, I'd do anything just to see you smile.\n\nAnd whenever you have your head on my shoulder and sneakily look up at me, I notice it every single time. I've told you that before, but I still love it every time you do it. ♡\n\nSometimes when you're talking to me, I just get completely lost in your eyes. I'll be listening, but part of me is just thinking about how pretty you are and wishing I could pause that exact moment and stay there forever.\n\nI think that's what I love most about us. It's not always some huge moment. Sometimes it's just you sitting next to me, talking about something completely random, your head on my shoulder, and me quietly wishing time would slow down a little. ♡",
-
         layout: "text",
         continuation: "fold",
       },
 
       {
-
-
+        id: "looking-forward",
         body:
           "I don't know what the future looks like, but I want you in it.\n\nI really want to go on a trip with you someday. Whether it's just us or we're surrounded by people we love, I want to experience somewhere new with you and make tons of memories along the way. I want the random pictures, the stupid jokes, the unexpected moments, and all the little stories we'll eventually look back on and laugh about.\n\nAnd honestly, I can't wait for Navratri either. I can't wait to be there with you, get dressed up, do garba together, and just enjoy those nights with you. I already know I'll probably spend half the time looking at you instead of actually paying attention to the garba. 😂\n\nI don't know exactly where life is going to take us, but I know I want to keep experiencing it with you. I want more days, more adventures, more memories, more pictures, more laughs, and just more of us.\n\nThere are still so many things we haven't done and so many memories we haven't made yet.\n\nAnd honestly, I can't wait to make them with you. ♡",
-
         layout: "minimal",
         continuation: "seal",
       },
 
       {
-
+        id: "final-line",
         body:
           "Even if we hadn't ended up sitting beside each other, I still think somehow, someway, we would've found each other. I think we were meant to meet, and somehow, no matter what, we'd still end up here together.\n\nMaybe that's what makes everything feel even more special to me. ♡\n\nNo matter how our story started, I think I'd always find my way back to you. ♡",
-
         layout: "final",
       },
     ],
@@ -419,18 +424,12 @@ export const relationshipConfig = {
 
     interactions: {
       unfoldLabel: "Unfold the letter",
-
       photoHint: "Pull the photograph free, then turn it over",
-
       photoFrontLabel: "Turn tucked photograph to the front",
-
       photoBackCopy:
         "A little reminder of everything we've already shared. ♡",
-
       sealLabel: "Break the paper seal",
-
       tabLabel: "Pull the next paper tab",
-
       foldLabel: "Open the next fold",
     },
 
@@ -440,7 +439,6 @@ export const relationshipConfig = {
     },
 
     replayLabel: "Read it again",
-
     restartLabel: "Start from the beginning",
 
     postscript: " I love you TONSSSSSSSSS chiku ♡",
@@ -455,8 +453,7 @@ export const relationshipConfig = {
     timer: {
       relationshipSince: "2025-09-17T17:35:00",
       heading: "Every second with you ♡",
-      subtext:
-        "And somehow I still want more time with you.",
+      subtext: "And somehow I still want more time with you.",
       placeholderNote:
         "The timer starts from the moment I first texted you.",
     },
@@ -467,8 +464,7 @@ export const relationshipConfig = {
       heading: "My favorite view",
       buttonLabel: "Take the pictures ♡",
       developingLabel: "developing our little strip…",
-      caption:
-        "Three little snapshots from our story.",
+      caption: "Three little snapshots from our story.",
 
       images: [
         {
