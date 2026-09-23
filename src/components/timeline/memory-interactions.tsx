@@ -108,13 +108,18 @@ export function DraggableMemoryPhoto({
       )}
 
       {dragged && (
-        <motion.p
-          initial={{ opacity: 0, y: 8 }}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-5 text-sm font-semibold text-wine"
+          transition={{ duration: reducedMotion ? 0 : 0.4 }}
+          className="mt-5 w-[min(82vw,420px)] rounded-2xl border border-wine/10 bg-[#fff7f1] px-6 py-5 text-center shadow-[0_12px_30px_rgba(91,51,57,.08)]"
         >
-          found it ♡
-        </motion.p>
+          <span className="mb-2 block text-xl">♡</span>
+
+          <p className="handwritten text-lg leading-7 text-ink/75">
+            {memory.message}
+          </p>
+        </motion.div>
       )}
     </div>
   );
@@ -184,6 +189,7 @@ export function FlippableMemoryPhoto({
           <div className="absolute inset-0 flex rotate-y-180 items-center justify-center rounded-sm bg-[#fff7f1] p-8 text-center shadow-[0_18px_35px_rgba(91,51,57,.16)] [backface-visibility:hidden]">
             <div>
               <span className="mb-4 block text-2xl">♡</span>
+
               <p className="handwritten text-lg leading-7 text-ink/70">
                 {memory.photoBackCopy ??
                   "A tiny note waiting behind this photograph."}
@@ -279,7 +285,9 @@ export function MemoryKeepsake({
         </span>
 
         <span className="mt-3 block text-sm font-semibold text-wine">
-          {found ? "kept safe ♡" : memory.interactionCopy ?? "find the keepsake"}
+          {found
+            ? "kept safe ♡"
+            : memory.interactionCopy ?? "find the keepsake"}
         </span>
       </button>
 
