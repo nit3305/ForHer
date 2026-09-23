@@ -69,7 +69,6 @@ export const relationshipConfig = {
   password: "140224",
 
   eyebrow: "A little something, just for you",
-  openingWhisper: "psst…",
   welcomeTitle: "I made something for you ♡",
   welcomeCopy: "A tiny private gift is waiting behind this little heart lock.",
 
@@ -82,10 +81,12 @@ export const relationshipConfig = {
 
   playfulness: {
     cursorLabel: "A tiny heart following along",
+
     escapingHeart: {
       label: "A shy little heart",
       foundCopy: "You caught the shy one.",
     },
+
     triviaCorrect: "A little memory found its way home.",
     triviaIncorrect: "That one slipped away. Try another memory.",
     pinSuccess: "The hearts recognize you.",
@@ -123,9 +124,8 @@ export const relationshipConfig = {
   successCopy: "The little heart unlocked. Your first gift is just ahead.",
 
   puzzle: {
-    imageSrc: "/puzzle-placeholder.png",
-    imageAlt:
-      "Placeholder photograph of two coffee cups, letters, ribbon, and pressed flowers",
+    imageSrc: "/puzzle.jpg",
+    imageAlt: "A candid photograph of us together",
     rows: 4,
     columns: 4,
     snapRadiusRatio: 1.05,
@@ -157,70 +157,60 @@ export const relationshipConfig = {
     heading: "The moments that made us.",
     introduction: "Four little chapters, waiting to be opened in order.",
 
-    contentNote:
-      "Placeholder memories — replace these in src/config/relationship.ts",
 
     memories: [
       {
         id: "beginning",
         date: "The beginning",
         eyebrow: "Where it started",
-        title: "The First Hello",
+        title: "our first photo",
         message:
-          "A placeholder for the moment our story first began to feel like ours.",
-        note:
-          "Replace this with the small detail you still remember most clearly.",
+          "Our first photo together.\n\nI know I upset you that day, and honestly, that's something I've thought about. But somehow, looking back at this picture, I'm still really grateful that this became our first little snapshot together.\n\nWe didn't know all the memories that were waiting for us yet. ♡",
+        note: "The first one of us ♡",
         images: [
           {
-            src: "/puzzle-placeholder.png",
-            alt:
-              "Placeholder still life of coffee, letters, ribbon, and flowers",
+            src: "/memory-1.jpg",
+            alt: "Our first photo together",
           },
         ],
-
-        // Stage 3 interaction:
-        // Memory 1 can now be tapped to flip.
         layout: "polaroid",
         icon: "spark",
         interaction: "flip",
         interactionCopy: "flip me ↻",
         photoBackCopy:
-          "Placeholder: add a tiny private note about the beginning of your story.",
+          "Our first photo together. The first little snapshot of us. ♡",
       },
 
       {
         id: "knowing",
         date: "A little later",
-        eyebrow: "A quiet realization",
-        title: "When It Felt Different",
+        title: "the “pixie cut” ♡",
         message:
-          "A placeholder for the ordinary moment that quietly became something more.",
-        note:
-          "This can hold the memory of when you first knew this was special.",
+          "You called this a pixie cut, so obviously that's what we're calling it now.\n\nLooking back at this picture, I still can't decide what's funnier — the haircut or the fact that you somehow made me feel like I pulled it off. ♡",
+        note: "Apparently this is a pixie cut.",
         images: [
           {
-            src: "/puzzle-placeholder.png",
-            alt: "Placeholder photograph awaiting a personal memory",
+            src: "/memory-2.jpg",
+            alt: "The pixie cut photo",
           },
         ],
         layout: "polaroid",
         icon: "heart",
         interaction: "drag",
         interactionCopy: "drag me",
+        photoBackCopy:
+          "You called this a pixie cut, so obviously that's what we're calling it now. ♡",
       },
 
       {
         id: "adventure",
-        date: "Along the way",
-        eyebrow: "Somewhere new",
-        title: "Our First Adventure",
+        title: "our first unofficial date ♡",
         message:
-          "A placeholder for a day when the place mattered less than being there together.",
+          "Our first unofficial date.\n\nWe may not have called it a date back then, but looking at this picture, it definitely feels like one.\n\nI love that this was one of the little moments that became part of our story without us even realizing how much it would mean later. ♡",
         images: [
           {
-            src: "/puzzle-placeholder.png",
-            alt:
-              "Placeholder romantic still life used until a real adventure photo is provided",
+            src: "/memory-3.jpg",
+            alt: "Our first unofficial date",
           },
         ],
         layout: "polaroid",
@@ -228,22 +218,20 @@ export const relationshipConfig = {
         interaction: "flip",
         interactionCopy: "flip me ↻",
         photoBackCopy:
-          "Placeholder: add a private note for the back of this photograph.",
+          "Not officially a date… but definitely a date. ♡",
       },
 
       {
         id: "right-now",
-        date: "Right here, right now",
-        eyebrow: "Still becoming",
-        title: "This Moment",
+        date: "The night of the concert",
+        title: "our first kiss ♡",
         message:
-          "A placeholder for everything you cherish about where your story is today.",
-        note:
-          "Replace this with the words you want them to carry into the next chapter.",
+          "The night of the concert.\n\nSomewhere between the music, the lights, and everything happening around us, I kissed you for the first time.\n\nI don't think I could've known then how many more memories we'd end up making together. But I'm really glad this was one of them. ♡",
+        note: "Our first kiss.",
         images: [
           {
-            src: "/puzzle-placeholder.png",
-            alt: "Large placeholder photograph for the final memory",
+            src: "/memory-4.jpg",
+            alt: "Our first kiss",
           },
         ],
         layout: "final",
@@ -277,17 +265,14 @@ export const relationshipConfig = {
     introSecondLine: "But you’re the reason I love all of it.",
     introButtonLabel: "Open the first note →",
 
-    contentNote:
-      "Placeholder reasons — replace these in src/config/relationship.ts",
-
     reasons: [
       {
         id: "ordinary-magic",
-        eyebrow: "A little reason",
+        title: "the little things ♡",
         message:
-          "Placeholder: I love how you can make an ordinary moment feel worth keeping.",
+          "I love how caring you are.\n\nYou notice the little things — the things I might not even realize I'm doing, the tiny details that most people would probably miss. And somehow, you always make me feel like those little things matter.\n\nI think that's one of the things I love most about you. ♡",
         note:
-          "Replace this with a light, everyday reason that feels unmistakably like her.",
+          "How caring she is and how she notices the little details.",
         accent: "playful",
         layout: "minimal",
         reveal: "envelope",
@@ -295,12 +280,11 @@ export const relationshipConfig = {
 
       {
         id: "easy-laughter",
-        eyebrow: "The easy kind of joy",
-        title: "The way you make me smile",
+        title: "your eyes ♡",
         message:
-          "Placeholder: I love the kind of laughter that arrives whenever we are simply being ourselves.",
+          "I love your eyes.\n\nThey're so pretty that somehow, every time I look into them, I fall for you a little harder.\n\nI don't think I'll ever get tired of looking at you. ♡",
         tinyCaption:
-          "Add an inside joke or playful nickname here.",
+          "Every time I look into them, I fall a little harder.",
         accent: "playful",
         layout: "envelope",
         reveal: "pull",
@@ -308,11 +292,11 @@ export const relationshipConfig = {
 
       {
         id: "little-surprises",
-        eyebrow: "Another small thing",
+        title: "you make everything better ♡",
         message:
-          "Placeholder: I love the unexpected little ways you make a day brighter.",
+          "Somehow, you make my day a hundred times better just by meeting me.\n\nI could have the most tiring or annoying day, and then I see you and suddenly none of it feels as bad anymore.\n\nI don't know how you do it. You just make everything better by being there. ♡",
         note:
-          "This is a good place for a funny habit or tiny observation.",
+          "She makes your day a hundred times better just by meeting you.",
         accent: "playful",
         layout: "playful",
         reveal: "scratch",
@@ -320,12 +304,11 @@ export const relationshipConfig = {
 
       {
         id: "seen",
-        eyebrow: "A quieter reason",
-        title: "The feeling of being understood",
+        title: "that little flutter ♡",
         message:
-          "Placeholder: I love the sense that I can bring my whole self into the moments we share.",
+          "You're so pretty.\n\nEvery time I go to pick you up, I somehow end up with the biggest smile on my face before I've even seen you. And then the second I do, my heart still manages to flutter like it's the first time.\n\nI don't think I'll ever get used to how pretty you are. ♡",
         note:
-          "Replace this with a personal example of feeling known or understood.",
+          "That little flutter and smile every time you go to pick her up.",
         accent: "soft",
         layout: "minimal",
         reveal: "hold",
@@ -333,11 +316,11 @@ export const relationshipConfig = {
 
       {
         id: "your-heart",
-        eyebrow: "What lives underneath it all",
+        title: "being myself ♡",
         message:
-          "Placeholder: I love the heart behind the choices you make and the person you choose to be.",
+          "I love how comfortable you make me feel around you.\n\nI can just be myself with you — I don't have to overthink how I look, what I say, or whether I'm being enough. Somehow, being around you makes me feel more confident in myself too.\n\nI think that's one of the best feelings you've given me: feeling completely comfortable being me, while somehow making me want to be an even better version of myself. ♡",
         note:
-          "Use this space for a quality you genuinely admire.",
+          "She makes you comfortable being yourself and more confident.",
         accent: "soft",
         layout: "letter",
         reveal: "flip",
@@ -345,12 +328,11 @@ export const relationshipConfig = {
 
       {
         id: "who-i-am-with-you",
-        eyebrow: "The reason beneath the reasons",
-        title: "Who I get to be beside you",
+        title: "my favorite person ♡",
         message:
-          "Placeholder: More than anything, I love the truest version of myself that I keep discovering with you.",
+          "Somewhere along the way, you became my favorite person.\n\nYou're the person I want to tell things to, laugh with, annoy, and make memories with. And honestly, I don't just want more memories with you right now — I want to keep making them with you for the rest of my life.\n\nI don't know what all those memories will look like yet, but I know I want you there for them. ♡",
         note:
-          "Save your strongest personal Stage 4 thought for this final note.",
+          "She has become your favorite person and you want to keep making memories together for the rest of your life.",
         accent: "deep",
         layout: "deep",
         reveal: "envelope",
@@ -374,9 +356,6 @@ export const relationshipConfig = {
       holdReleased: "Almost—the heart is still here.",
       holdFallback: "Reveal this reason",
       flipHint: "Turn the note over",
-      pileSecret:
-        "Placeholder: one more reason was hiding under the whole pile.",
-      pileSecretLabel: "Look beneath the notes",
     },
   },
 
@@ -387,84 +366,51 @@ export const relationshipConfig = {
       beginLabel: "Read my letter",
     },
 
-    contentNote:
-      "Placeholder letter — replace every section in src/config/relationship.ts",
-
     sections: [
       {
-        id: "looking-back",
-        eyebrow: "Before anything else",
-        heading: "Looking back",
+
         body:
-          "Placeholder: Write about what it feels like to look back at the path that brought the two of you here, without needing to name every moment again.",
-        emphasis:
-          "Every chapter before this was leading somewhere.",
-        image: {
-          src: "/puzzle-placeholder.png",
-          alt:
-            "Placeholder photograph for the opening of the final letter",
-        },
-        layout: "photo",
+          "I still think I was really lucky to have you sit beside me during classes. Honestly, with how difficult it was for us to even end up sitting beside each other, sometimes I feel like it had to be fate. Maybe we were always going to find our way to each other somehow.\n\nI wanted to talk to you so badly, but you were so damn pretty that I couldn't even bring myself to approach you. You were my crush, so obviously my brain decided that talking to you was suddenly the hardest thing in the world. I just wanted to be around you all the time.\n\nI still remember Krishi and Foram making that joke about us because I was wearing yellow and you were wearing pink — “bundi ka laddu.” 😂 I don't think I could've guessed back then how funny it would be to look back at those little moments and realize they were part of the beginning of us.\n\nAnd somehow, from something as simple as sitting beside each other in class, we ended up here. I really do think we were meant to meet somehow. ♡",
+
+        layout: "text",
         continuation: "seal",
-        annotation:
-          "Placeholder: add a tiny handwritten margin note.",
       },
 
       {
-        id: "what-you-mean",
-        eyebrow: "What I want you to know",
-        heading: "What you mean to me",
+
+
         body:
-          "Placeholder: Use this section for the quiet truth at the center of the relationship—what her presence means to you and why it matters.",
-        emphasis:
-          "Some things become more meaningful the longer we hold them close.",
+          "Having you in my life is probably the most important thing to me. You're so precious to me, and you're so close to my heart that sometimes I don't even know how to properly put it into words.\n\nYou're the person I feel like I can tell everything to. I can talk to you about the smallest, most random things, or the things that actually matter, and somehow it always feels right. Your kindness and the way you care about me make it so easy for me to be comfortable around you and just be myself.\n\nI think you make me feel complete in a way I didn't really know I was looking for. It's hard to explain exactly why it's you. I just know that when I think about the person I want beside me, the person I want to tell things to, laugh with, annoy, and make memories with, it's always you.\n\nI might never find the perfect words for why you specifically mean so much to me. Maybe I don't need to. I just know that having you in my life is something I'll always be incredibly grateful for. ♡",
+
         layout: "text",
         continuation: "tab",
-        annotation:
-          "Placeholder: add a private aside here.",
       },
 
       {
-        id: "everyday-love",
-        eyebrow: "In the ordinary hours",
-        heading: "The love that lives between moments",
+
+
         body:
-          "Placeholder: Write about the everyday kind of love—the comfort of presence, familiar rhythms, and small moments that never need an occasion.",
-        image: {
-          src: "/puzzle-placeholder.png",
-          alt:
-            "Placeholder photograph for an everyday shared moment",
-        },
-        layout: "split",
+          "I think some of my favorite parts of loving you are the little moments that probably don't seem like much to anyone else.\n\nEven when you get all angry at me, I can't lie, sometimes it's kinda cute. Sometimes. Don't get too confident though. 😂\n\nYour smile is something I genuinely don't think I'll ever get tired of. I swear, I'd do anything just to see you smile.\n\nAnd whenever you have your head on my shoulder and sneakily look up at me, I notice it every single time. I've told you that before, but I still love it every time you do it. ♡\n\nSometimes when you're talking to me, I just get completely lost in your eyes. I'll be listening, but part of me is just thinking about how pretty you are and wishing I could pause that exact moment and stay there forever.\n\nI think that's what I love most about us. It's not always some huge moment. Sometimes it's just you sitting next to me, talking about something completely random, your head on my shoulder, and me quietly wishing time would slow down a little. ♡",
+
+        layout: "text",
         continuation: "fold",
       },
 
       {
-        id: "looking-forward",
-        eyebrow: "From here",
-        heading: "Whatever comes next",
+
+
         body:
-          "Placeholder: Share a warm, future-facing thought about continuing to grow together, without inventing plans or making promises that are not yours.",
-        emphasis:
-          "I am grateful there are still pages we have not written yet.",
+          "I don't know what the future looks like, but I want you in it.\n\nI really want to go on a trip with you someday. Whether it's just us or we're surrounded by people we love, I want to experience somewhere new with you and make tons of memories along the way. I want the random pictures, the stupid jokes, the unexpected moments, and all the little stories we'll eventually look back on and laugh about.\n\nAnd honestly, I can't wait for Navratri either. I can't wait to be there with you, get dressed up, do garba together, and just enjoy those nights with you. I already know I'll probably spend half the time looking at you instead of actually paying attention to the garba. 😂\n\nI don't know exactly where life is going to take us, but I know I want to keep experiencing it with you. I want more days, more adventures, more memories, more pictures, more laughs, and just more of us.\n\nThere are still so many things we haven't done and so many memories we haven't made yet.\n\nAnd honestly, I can't wait to make them with you. ♡",
+
         layout: "minimal",
         continuation: "seal",
-        annotation:
-          "Placeholder: add one small future-facing note.",
       },
 
       {
-        id: "final-line",
-        eyebrow: "After everything",
+
         body:
-          "Placeholder: If I had to find my way here all over again, my heart would still lead me to you.",
-        emphasis:
-          "Replace this with the simplest, truest final line you want her to keep.",
-        image: {
-          src: "/puzzle-placeholder.png",
-          alt:
-            "Placeholder photograph reserved for the final words of the letter",
-        },
+          "Even if we hadn't ended up sitting beside each other, I still think somehow, someway, we would've found each other. I think we were meant to meet, and somehow, no matter what, we'd still end up here together.\n\nMaybe that's what makes everything feel even more special to me. ♡\n\nNo matter how our story started, I think I'd always find my way back to you. ♡",
+
         layout: "final",
       },
     ],
@@ -473,25 +419,31 @@ export const relationshipConfig = {
 
     interactions: {
       unfoldLabel: "Unfold the letter",
-      photoHint:
-        "Pull the photograph free, then turn it over",
-      photoFrontLabel:
-        "Turn tucked photograph to the front",
+
+      photoHint: "Pull the photograph free, then turn it over",
+
+      photoFrontLabel: "Turn tucked photograph to the front",
+
       photoBackCopy:
-        "Placeholder: write the few words you want hidden behind this photograph.",
+        "A little reminder of everything we've already shared. ♡",
+
       sealLabel: "Break the paper seal",
+
       tabLabel: "Pull the next paper tab",
+
       foldLabel: "Open the next fold",
     },
 
     signature: {
       prefix: "Love,",
-      name: "[Your Name]",
+      name: "Niju",
     },
 
     replayLabel: "Read it again",
+
     restartLabel: "Start from the beginning",
-    postscript: "Placeholder: p.s. I love you.",
+
+    postscript: " I love you TONSSSSSSSSS chiku ♡",
   },
 
   finale: {
@@ -501,12 +453,12 @@ export const relationshipConfig = {
       "Some photographs, some time together, and then one final letter.",
 
     timer: {
-      relationshipSince: "YYYY-MM-DD",
+      relationshipSince: "2025-09-17T17:35:00",
       heading: "Every second with you ♡",
       subtext:
-        "Placeholder: and somehow I still want more time with you.",
+        "And somehow I still want more time with you.",
       placeholderNote:
-        "Replace relationshipSince with the date you want the timer to begin.",
+        "The timer starts from the moment I first texted you.",
     },
 
     photoBooth: {
@@ -516,58 +468,23 @@ export const relationshipConfig = {
       buttonLabel: "Take the pictures ♡",
       developingLabel: "developing our little strip…",
       caption:
-        "Placeholder: replace these with three favorite photographs.",
+        "Three little snapshots from our story.",
+
       images: [
         {
-          src: "/puzzle-placeholder.png",
-          alt: "Placeholder photograph for the first photobooth frame",
+          src: "/photobooth-1.png",
+          alt: "An illustrated photo of us together",
         },
         {
-          src: "/puzzle-placeholder.png",
-          alt: "Placeholder photograph for the second photobooth frame",
+          src: "/photobooth-2.png",
+          alt: "An illustrated moment between us",
         },
         {
-          src: "/puzzle-placeholder.png",
-          alt: "Placeholder photograph for the third photobooth frame",
+          src: "/photobooth-3.png",
+          alt: "An illustrated photo booth moment",
         },
       ],
     },
-  },
-  timer: {
-    relationshipSince: "YYYY-MM-DD",
-    heading: "Every second with you ♡",
-    subtext:
-      "Placeholder: and somehow I still want more time with you.",
-    placeholderNote:
-      "Replace relationshipSince in src/config/relationship.ts to start the live counter.",
-  },
-
-  photoBooth: {
-    enabled: true,
-    eyebrow: "One tiny photo booth",
-    heading: "My favorite view",
-    buttonLabel: "Take the pictures ♡",
-    developingLabel: "developing our little strip…",
-    caption:
-      "Placeholder: replace these with three favorite photographs.",
-
-    images: [
-      {
-        src: "/puzzle-placeholder.png",
-        alt:
-          "First placeholder photograph for the photo booth strip",
-      },
-      {
-        src: "/puzzle-placeholder.png",
-        alt:
-          "Second placeholder photograph for the photo booth strip",
-      },
-      {
-        src: "/puzzle-placeholder.png",
-        alt:
-          "Third placeholder photograph for the photo booth strip",
-      },
-    ],
   },
 
   stages: [
@@ -577,6 +494,6 @@ export const relationshipConfig = {
     "Little reasons",
     "Always",
   ],
-} as const ;
+} as const;
 
 export const relationshipPin = "2303";
